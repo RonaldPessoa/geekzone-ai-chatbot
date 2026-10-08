@@ -133,3 +133,192 @@
         .btn-enviar { background-color: var(--roxo-geek); color: white; border: none; border-radius: 25px; padding: 10px 15px; cursor: pointer; font-weight: bold; }
 
         @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* Easter Egg Sith: sobrescreve o tema claro ou escuro, inclusive botões e chat. */
+body.sith-mode {
+    --bg-body: #090909;
+    --bg-card: #1b0a0d;
+    --text-main: #fff1f1;
+    --roxo-geek: #bd101d;
+    --roxo-hover: #ef233c;
+    --borda-card: #75121e;
+}
+body.sith-mode .preco { color: #ff5263; }
+body.sith-mode .bot-message { background-color: #361117; }
+body.sith-mode .btn-mic { background-color: #66131d; }
+@media (prefers-reduced-motion: reduce) {
+    body.sith-mode, body.sith-mode * { transition-duration: 0.01ms !important; }
+}
+
+/* Matrix: todos os elementos herdam tipografia monoespacada. */
+body.matrix-mode {
+    --bg-body: #000; --bg-card: #031007; --text-main: #a4ff00;
+    --roxo-geek: #187d15; --roxo-hover: #2aaa21; --borda-card: #4dff36;
+    background: #000; color: #a4ff00;
+}
+body.matrix-mode, body.matrix-mode * { font-family: Consolas, 'Courier New', monospace !important; }
+body.matrix-mode .preco, body.matrix-mode .topo, body.matrix-mode .topo * { color: #a4ff00 !important; }
+body.matrix-mode .bot-message { background: #05220b; color: #a4ff00; }
+body.matrix-mode .user-message { background: #124719; color: #b9ff78; }
+body.matrix-mode .btn-comprar, body.matrix-mode .btn-enviar, body.matrix-mode .btn-flutuante { color: #b9ff78; }
+body.explosion-mode { background: #080808; margin: 0; }
+.explosion-scene { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; color: #fff; font-family: monospace; }
+.explosion-scene img { max-width: min(85vw, 480px); max-height: 60vh; object-fit: contain; }
+.explosion-scene button { padding: 12px 22px; cursor: pointer; border-radius: 8px; }
+
+
+
+/* KABOOM-42 — EXPLOSÃO EM TELA CHEIA */
+
+body.explosion-mode {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+body.explosion-mode .explosion-scene {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+    background: #000;
+    z-index: 999999;
+}
+
+body.explosion-mode .explosion-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Escurecimento leve para destacar o texto */
+body.explosion-mode .explosion-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    pointer-events: none;
+}
+
+body.explosion-mode .explosion-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    padding: 24px;
+    text-align: center;
+    color: white;
+}
+
+body.explosion-mode .explosion-overlay h1 {
+    font-size: clamp(32px, 6vw, 90px);
+    font-weight: 900;
+    color: #ffb347;
+    text-shadow:
+        0 0 15px #ff4500,
+        0 0 40px #ff0000,
+        3px 3px 8px #000;
+    animation: impactoTexto 0.8s ease-out;
+}
+
+body.explosion-mode .explosion-overlay p {
+    font-size: clamp(14px, 2vw, 26px);
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px #000;
+}
+
+body.explosion-mode .explosion-overlay button {
+    padding: 16px 32px;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 69, 0, 0.7);
+}
+
+body.explosion-mode .explosion-overlay button:hover {
+    background: #ff6500;
+    transform: scale(1.05);
+}
+
+@keyframes impactoTexto {
+    from {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* CORREÇÃO — EXPLOSÃO EM TELA INTEIRA */
+
+html:has(body.explosion-mode),
+body.explosion-mode {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body.explosion-mode .explosion-scene {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    background: #000;
+    z-index: 999999;
+}
+
+body.explosion-mode .explosion-scene > img.explosion-background {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    transform: none !important;
+    z-index: 0 !important;
+}
+
+body.explosion-mode .explosion-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
